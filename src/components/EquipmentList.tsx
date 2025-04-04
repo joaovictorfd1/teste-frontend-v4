@@ -1,6 +1,6 @@
 import { 
   List, 
-  ListItem, 
+  ListItemButton,
   Typography, 
   Paper, 
   Box,
@@ -66,8 +66,7 @@ export const EquipmentList = ({
       <List>
         {equipments.map((equipment) => (
           <Box key={equipment.id}>
-            <ListItem 
-              button
+            <ListItemButton // Alterado aqui
               selected={selectedEquipment?.id === equipment.id}
               onClick={() => onSelectEquipment(equipment)}
               sx={{ display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}
@@ -87,7 +86,7 @@ export const EquipmentList = ({
                       Modelo: {equipment.model.name}
                     </Typography>
                   )}
-                  {equipment.currentState.name !== 'Operando' && (
+                  {equipment.currentState?.name !== 'Operando' && equipment.stateHistory?.length > 0 && (
                     <Typography variant="caption" color="textSecondary" display="block">
                       Última atualização: {formatDate(equipment.stateHistory[0].date)}
                     </Typography>
@@ -119,7 +118,7 @@ export const EquipmentList = ({
                   </IconButton>
                 </Box>
               </Box>
-            </ListItem>
+            </ListItemButton>
             
             <Collapse in={expandedId === equipment.id}>
               <Box sx={{ p: 2, bgcolor: 'background.paper' }}>
